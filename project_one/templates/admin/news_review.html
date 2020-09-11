@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	{% include 'admin/head_link.html' %}
+</head>
+<body>
+	<div class="breadcrub">
+			当前位置：新闻管理>新闻审核
+			<form class="news_filter_form">
+				<input type="text" placeholder="请输入关键字" class="input_txt">
+				<input type="submit" value="搜 索" class="input_sub">
+			</form>
+		</div>
+		<div class="pannel">
+			<table class="common_table">
+				<tr>
+					<th width="3%">id</th>
+					<th width="70%">标题</th>
+					<th width="15%">发布时间</th>
+					<th width="5%">状态</th>
+					<th width="8%">管理操作</th>
+				</tr>
+				<tr v-for="news in news_list">
+					<td>[[news.id]]</td>
+					<td class="tleft">[[news.title]]</td>
+					<td>[[news.create_time]]</td>
+					<td v-if="news.status==2">已通过</td>
+					<td v-else-if="news.status==1">待审核</td>
+					<td v-else>未通过</td>
+					<td>
+						<a :href="'/admin/news/review/detail/'+news.id" class="review">审核</a>
+					</td>
+				</tr>
+			</table>
+		</div>
+
+		<div class="box">
+			<div id="pagination" class="page"></div>
+		</div>
+
+        <script>
+            //var key_params='';
+            common_table_vue = new Vue({
+               el:'.common_table',
+               delimiters:['[[', ']]'],
+               data:{
+                   news_list:[],
+                   total_page:1
+               },
+                methods:{
+                   get_news_info:function (params) {
+                       //key_params=$('.input_txt').val();
+                       //$('.input_txt').val('');
+                       axios.get('/admin/news/review/list',{
+                       params:
+                       {
+                           'params':params,
+                           'page':1
+                       }
+                    }).then(function (dat) {
+                           common_table_vue.news_list=dat.data.news_list;
+                           $("#pagination").pagination({
+                                currentPage: 1,
+                                totalPage: dat.data.total_page,
+                                callback: function(current) {
+                                    axios.get('/admin/news/review/list',{
+                                       params:
+                                       {
+                                           'params':params,
+                                           'page':current
+                                       }
+                                    }).then(function (dat) {
+                                        common_table_vue.news_list=dat.data.news_list;
+                                    })
+                                }
+                            });
+                       })
+
+                   }
+                },
+                mounted:function () {
+                    this.get_news_info('');
+                }
+            });
+
+			//$(function() {
+			//	$("#pagination").pagination({
+			//		currentPage: 1,
+			//		totalPage: 3,
+			//		callback: function(current) {
+			//		    common_table_vue.get_news_info(current);
+			//		}
+			//	});
+			//});
+            $('.news_filter_form').submit(function (e) {
+                e.preventDefault();
+                var key_params=$('.input_txt').val();
+                $('.input_txt').val('');
+                common_table_vue.get_news_info(key_params);
+            })
+		</script>
+
+	
+</body>
+</html>

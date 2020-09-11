@@ -1,0 +1,13 @@
+2020-08-20 16:52:17 practice.py <module> 10 [1492] [WARNING] 999999999999999999
+2020-08-20 16:53:02 practice.py <module> 10 [15924] [WARNING] 999999999999999999
+2020-08-20 16:53:39 practice.py <module> 10 [9516] [WARNING] 999999999999999999
+2020-08-20 16:54:20 practice.py <module> 10 [3692] level--[WARNING] 999999999999999999
+2020-08-20 16:54:26 practice.py <module> 10 [2444] level--[WARNING] 999999999999999999
+2020-08-20 16:54:58 practice.py <module> 10 [1032] level[WARNING] 999999999999999999
+2020-08-20 16:55:29 practice.py <module> 10 [12164] level[WARNING] 999999999999999999
+2020-08-20 16:56:41 practice.py--<module> line[10] thread[1588] level--[WARNING] 999999999999999999
+2020-08-20 16:58:59 C:/资料/recently/practise/project_one/practice.py practice.py--<module> line[10] thread[5328] level--[WARNING] 999999999999999999
+2020-08-20 16:59:32 C:/资料/recently/practise/project_one/practice.py practice.py--<module> line[10] thread[12024] level--[WARNING] 999999999999999999
+2020-08-20 17:10:54 C:/资料/recently/practise/project_one/practice.py practice.py--<module> line[11] thread[15420] level--[WARNING] 999999999999999999
+2020-08-20 17:14:05 C:/资料/recently/practise/project_one/practice.py practice.py--<module> line[11] thread[5396] level--[WARNING] 999999999999999999
+2020-08-20 17:16:16 C:/资料/recently/practise/project_one/practice.py practice.py--<module> line[11] thread[7120] level--[WARNING] 999999999999999999

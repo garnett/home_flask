@@ -1,0 +1,38 @@
+{% extends 'news/base_model.html' %}
+    {% block others %}
+    <script type="text/javascript" src="/static/news/js/watch.js"></script>
+    <script type="text/javascript" src="/static/news/js/vue.min.js"></script>
+    <script type="text/javascript" src="/static/news/js/axios.min.js"></script>
+    {% endblock %}
+    {% block fenlei %}
+            <ul class="menu fl">
+                <li class="active" data-cid="0"><a href="/">最新</a></li>
+                <li v-for="cate in category_list" :ref="'fen'+cate.id" :data-cid="cate.id" @click="get_news_type(cate.id,$event)">
+                    <a href="javascript:;">[[ cate.name ]]</a>
+                </li>
+            </ul>
+    {% endblock %}
+    {% block content %}
+    <div class="conter_con">
+        <ul class="list_con fl">
+
+            <li v-for="news in news_list">
+                <a :href="'/detail/' + news.id" class="news_pic fl"><img :src="news.pic_url"></a>
+                <a :href="'/detail/' + news.id" class="news_title fl">[[ news.title ]]</a>
+                <a href="#" class="news_detail fl">[[news.content]]</a>
+                <div class="author_info fl">
+                    <div class="author fl">
+                        <a :href="'/user/'+news.author_id"><img :src="news.author_avatar" alt="author" style="width: 30px; height: 30px"></a>
+                        <a :href="'/user/'+news.author_id">[[news.author]]</a>
+                    </div>
+                    <div class="time fl">[[news.update_time]]</div>
+                </div>
+            </li>
+
+        </ul>
+        <div class="rank_con fr">
+            {% import 'news/macro_click_top.html' as click_top %}
+            {{ click_top.click_top_list(news_list) }}
+        </div>
+    </div>
+    {% endblock %}

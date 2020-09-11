@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	{% include 'admin/head_link.html' %}
+	<script type="text/javascript" src="/static/admin/js/jquery.form.min.js"></script>
+	<script src="/static/admin/tinymce/js/tinymce/tinymce.min.js"></script>
+    <script src="/static/admin/js/tinymce_setup.js"></script>
+    <script src="/static/admin/js/qs.js"></script>
+	<script src="/static/admin/js/news_edit_detail.js"></script>
+</head>
+<body>
+	<div class="breadcrub">
+			当前位置：新闻管理>新闻版本编辑			
+		</div>
+		<div class="pannel">
+			<form class="news_edit" enctype="multipart/form-data" method="post">
+                <input type="hidden" id="get_id" value="{{ news_id }}">
+                <input type="hidden" id="csrf_token" value="{{ csrf_token() }}">
+			<h3 class="review_title">新闻版式编辑</h3>
+	    	<div class="form_group">
+	    		<label>新闻标题：</label>
+	    		<input v-model="news_title" type="text" class="input_txt2" :value="news_title">
+	    	</div>
+	    	<div class="form_group">
+				<label>新闻分类：</label>
+				<select class="sel_opt" v-model="news_type">
+					<option v-for="category in categorys" :value="category.id">[[category.name]]</option>
+				</select>
+			</div>
+			<div class="form_group">
+				<label>新闻摘要：</label>
+				<textarea v-model="news_summary" class="input_multxt">[[news_summary]]</textarea>
+			</div>
+			<div class="form_group">
+				<label>索引图片：</label>
+                <img :src="news_pic" alt="索引图片" class="index_pic" id="turn_img">
+			</div>
+			<div class="form_group">
+				<label>上传图片：</label>
+				<input type="file" class="input_file" id="pic" onchange="iget(this)">
+			</div>
+			<div class="form_group">
+				<label>新闻内容：</label>
+				<div class="rich_wrap fl">
+					<input v-model="news_content" class="input_area" id="rich_content" name="content" :value="news_content"></input>
+				</div>
+			</div>
+			<div class="form_group indent_group line_top">
+				<input type="button" value="确定" class="confirm" @click="submit_modify()">
+				<input type="button" value="取消" class="cancel" onclick="cancel()">
+			</div>
+			</form>	
+		</div>
+
+</body>
+</html>

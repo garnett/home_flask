@@ -1,0 +1,119 @@
+{% extends 'news/base_model.html' %}
+{% block others %}
+<script type="text/javascript" src="/static/news/js/watch.js"></script>
+<script type="text/javascript" src="/static/news/js/qs.js"></script>
+<script type="text/javascript" src="/static/news/js/detail.js"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="conter_con">
+        <div class="detail_con fl">
+            <input type="hidden" id="get_id" value="{{ news.id }}">
+            <h3>{{ news.title }}</h3>
+            <div class="detail_about clearfix">
+                <span class="time_souce fl">{{ news.update_time }} 来源: {{ news.source }}</span>
+                <span class="comment fr" id="top_num">{{ news.comment_count }}</span>
+            </div>
+
+            <p class="summary">
+                {{ news.summary }}
+            </p>
+
+            <h4>{{ news.title }}</h4>
+
+            <p>{{ news.content }}</p>
+            <input type="hidden" id="csrf_token" value="{{ csrf_token() }}">
+        {% if not is_my_collect %}
+        <a href="javascript:;" class="collection block-center">收藏</a>
+        <a href="javascript:;" class="collected block-center" style="display: none">
+            <span class="out">已收藏</span>
+            <span class="over">取消收藏</span>
+        </a>
+        <a href="javascript:;" class="collect_tip block-center" style="display: none">提示：这是您自己发布的新闻!</a>
+        {% else %}
+        <a href="javascript:;" class="collection block-center" style="display: none">收藏</a>
+        <a href="javascript:;" class="collected block-center" style="display: block">
+            <span class="out">已收藏</span>
+            <span class="over">取消收藏</span>
+        </a>
+        <a href="javascript:;" class="collect_tip block-center" style="display: none">提示：这是您自己发布的新闻!</a>
+        {% endif %}
+
+        <div class="comment_form_logout">
+            登录发表你的评论
+        </div>
+
+        <form action="" class="comment_form">
+            <div class="person_pic">
+                <img src="{{ user.avatar_url }}" alt="用户图标">
+            </div>
+            <textarea placeholder="请发表您的评论" class="comment_input"></textarea>
+            <input type="submit" name="" value="评 论" class="comment_sub">
+        </form>
+
+
+        <div class="comment_count" id="under_num">
+            {{ news.comment_count }}条评论
+        </div>
+        
+        <div class="comment_list_con">
+            <input type="hidden" id="csrf_token" value="{{ csrf_token() }}">
+
+            <div class="comment_list" v-for="comment in comment_list">
+                <div class="person_pic fl">
+                    <img :src="comment.avatar" alt="用户图标">
+                </div>    
+                <div class="user_name fl">用户--[[ comment.nick ]]</div>
+                <div class="comment_text fl">
+                    [[ comment.msg ]]
+                </div>
+
+                <div class="reply_text_con fl" v-for="cback in comment.cback">
+                    <div class="user_name2">[[ cback.cback_user ]]</div>
+                    <div class="reply_text">
+                        [[ cback.cback_msg ]]
+                    </div>
+                </div>
+
+                <div class="comment_time fl">[[ comment.sub_time ]]</div>
+
+
+                <a v-if="comment.is_liked!=0" href="javascript:;" class="has_comment_up fr" @click="like_comment(comment.id,$event)">[[ comment.like_num ]]</a>
+                <a v-else href="javascript:;" class="comment_up fr" @click="like_comment(comment.id,$event)">[[ comment.like_num ]]</a>
+
+{#                <a href="javascript:;" class="comment_up fr">赞</a>#}
+
+
+                <a href="javascript:;" class="comment_reply fr">回复</a>
+                <from class="reply_form fl">
+                    <textarea placeholder="请发表您的评论" class="reply_input" id="reply_input"></textarea>
+                    <input type="button" name="" value="回复" class="reply_sub fr" @click="reply_comment(comment.id,$event)">
+                    <input type="reset" name="" value="取消" class="reply_cancel fr">
+                </from>            
+            </div>
+
+        </div>
+            
+            
+        </div>
+        <div class="rank_con fr">
+            <div class="author_card">
+                <input type="hidden" id="follow_id" value="{{ news.user.id }}">
+                <a href="/user/{{ news.user.id }}" class="author_pic"><img src="{{ news.user.avatar_url }}" alt="author_pic"></a>
+                <a href="/user/{{ news.user.id }}" class="author_name">{{ news.user.nick_name }}</a>
+                <div class="author_resume">{{ news.user.signature }}</div>
+                <div class="writings"><span>总篇数</span><b>{{ news.user.public_count }}</b></div>
+                <div class="follows"><span>粉丝</span><b>{{ news.user.follow_count }}</b></div>
+                {% if is_my_focus %}
+                <a href="javascript:;" class="focus fr" style="display: none">关注</a>
+                <a href="javascript:;" class="focused fr"><span class="out">已关注</span><span class="over">取消关注</span></a>
+                {% else %}
+                <a href="javascript:;" class="focus fr">关注</a>
+                <a href="javascript:;" class="focused fr" style="display: none"><span class="out">已关注</span><span class="over">取消关注</span></a>
+                {% endif %}
+            </div>            
+            {% import 'news/macro_click_top.html' as click_top %}
+            {{ click_top.click_top_list(news_list) }}
+        </div>
+    </div>
+    {% endblock %}
