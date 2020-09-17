@@ -225,7 +225,44 @@ def news_type():
     return render_template('admin/news_type.html')
 
 
+@app_admin.route('/add/category', methods=['POST'])
+@LoginRequire(is_admin=1)
+def add_category():
+    name = request.form.get('name', '')
+    action = request.form.get('action', '')
+    cur_id = int(request.form.get('cate_id', 0))
+    if not all([name, action]):
+        return jsonify(ret=1, message='请求参数不完整！')
 
+    cate_obj = NewsCategory.query.filter_by(name=name).count()
+    if cate_obj:
+        return jsonify(ret=2, message="该分类已存在~！")
+    if action == 'add':
+        cate = NewsCategory()
+        cate.name = name
+        db.session.add(cate)
+        db.session.commit()
+    else:
+        cur_cate = NewsCategory.query.get(cur_id)
+        if not cur_cate:
+            abort(404)
+        cur_cate.name = name
+        db.session.commit()
+    return jsonify(ret=3, message="添加成功！")
+
+
+@app_admin.route('/del/category', methods=['POST'])
+@LoginRequire(is_admin=1)
+def del_category():
+    cur_id = int(request.form.get('cate_id', 0))
+    if not cur_id:
+        abort(404)
+    cur_cate = NewsCategory.query.get(cur_id)
+    if not cur_cate:
+        abort(404)
+    cur_cate.is_delete = True
+    db.session.commit()
+    return jsonify(ret=1, message="删除成功！")
 
 
 

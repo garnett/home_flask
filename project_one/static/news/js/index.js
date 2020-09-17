@@ -50,27 +50,47 @@ $(function () {
                 if(event) {
                     var crr = event.currentTarget;
                     crr.className = 'active';
-                    if (crr.dataset.cid == '1') {
-                        crr.previousElementSibling.className = '';
-                        crr.nextElementSibling.className = '';
-                        crr.nextElementSibling.nextElementSibling.className = '';
-                        crr.nextElementSibling.nextElementSibling.nextElementSibling.className = '';
-                    } else if (crr.dataset.cid == '2') {
-                        crr.previousElementSibling.className = '';
-                        crr.previousElementSibling.previousElementSibling.className = '';
-                        crr.nextElementSibling.className = '';
-                        crr.nextElementSibling.nextElementSibling.className = '';
-                    } else if (crr.dataset.cid == '3') {
-                        crr.previousElementSibling.className = '';
-                        crr.previousElementSibling.previousElementSibling.className = '';
-                        crr.previousElementSibling.previousElementSibling.previousElementSibling.className = '';
-                        crr.nextElementSibling.className = '';
-                    } else {
-                        crr.previousElementSibling.className = '';
-                        crr.previousElementSibling.previousElementSibling.className = '';
-                        crr.previousElementSibling.previousElementSibling.previousElementSibling.className = '';
-                        crr.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.className = '';
-                    }
+                    var total_type = parseInt(event.currentTarget.parentElement.lastElementChild.dataset.cid);
+                    var n = crr.previousElementSibling;
+                    var m = crr.nextElementSibling;
+                    //for(var i=1;i<=total_type;i++){
+                        //if(crr.dataset.cid == i){
+                    for(;n;n=n.previousElementSibling){
+                        if(n==null){
+                            break;
+                        }
+                        n.className='';
+                            }
+                    for(;m;m=m.nextElementSibling){
+                        if(m==null){
+                            break;
+                        }
+                        m.className='';
+                            }
+                        //}
+                    //}
+
+                    // if (crr.dataset.cid == '1') {
+                    //     crr.previousElementSibling.className = '';
+                    //     crr.nextElementSibling.className = '';
+                    //     crr.nextElementSibling.nextElementSibling.className = '';
+                    //     crr.nextElementSibling.nextElementSibling.nextElementSibling.className = '';
+                    // } else if (crr.dataset.cid == '2') {
+                    //     crr.previousElementSibling.className = '';
+                    //     crr.previousElementSibling.previousElementSibling.className = '';
+                    //     crr.nextElementSibling.className = '';
+                    //     crr.nextElementSibling.nextElementSibling.className = '';
+                    // } else if (crr.dataset.cid == '3') {
+                    //     crr.previousElementSibling.className = '';
+                    //     crr.previousElementSibling.previousElementSibling.className = '';
+                    //     crr.previousElementSibling.previousElementSibling.previousElementSibling.className = '';
+                    //     crr.nextElementSibling.className = '';
+                    // } else {
+                    //     crr.previousElementSibling.className = '';
+                    //     crr.previousElementSibling.previousElementSibling.className = '';
+                    //     crr.previousElementSibling.previousElementSibling.previousElementSibling.className = '';
+                    //     crr.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.className = '';
+                    // }
                 }
                //this.cur_cate1 = true;
                var str_fen = 'fen' + value;

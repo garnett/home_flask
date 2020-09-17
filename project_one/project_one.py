@@ -33,8 +33,10 @@ app = create_application()
 
 manager = Manager(app)
 
+# 实例化SQLAlchemy对象
 db.init_app(app)
 
+# 数据库迁移命令绑定
 Migrate(app, db)
 manager.add_command('db', MigrateCommand)
 

@@ -166,6 +166,13 @@ def get_txt_name():
     print(t1.group(0))
 
 
+class Play():
+    name = 'kobe'
+
+    def __init__(self):
+        con = 'lakers'
+
+
 if __name__ == '__main__':
     # cdn = 'http://qflgjl93y.hn-bkt.clouddn.com/'
     # save_pic()
@@ -173,4 +180,8 @@ if __name__ == '__main__':
     # pic_base()
     # write_pic()
     # print(datetime.now().strftime('%Y_%m_%d_%H_%M_%S_%f'))
-    shutil.rmtree('C:/资料/recently/practise/project_one/temp_file')
+    # shutil.rmtree('C:/资料/recently/practise/project_one/temp_file')
+    p1 = Play()
+    print(p1.name)
+    print(Play.name)
+    print(Play.con)

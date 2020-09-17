@@ -97,7 +97,7 @@ def get_news_data():
 
 @app_news.route('/category')
 def get_category():
-    type_list = NewsCategory.query.all()
+    type_list = NewsCategory.query.filter(NewsCategory.is_delete==False)
 
     category_list = []
     for cate in type_list:
